@@ -4,7 +4,7 @@ const app = express()
 app.use(bodyParser.json())
 app.set('port', (process.env.PORT || 5000))
 
-const REQUIRE_AUTH = true
+const REQUIRE_AUTH = false
 const AUTH_TOKEN = 'an-example-token'
 
 app.get('/', function (req, res) {
