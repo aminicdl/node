@@ -20,10 +20,16 @@ app.post('/webhook', function (req, res) {
   console.log(req.body)
 
   // we have a simple authentication
-
+  if (REQUIRE_AUTH) {
+    if (req.headers['auth-token'] !== AUTH_TOKEN) {
+      return res.status(401).send('Unauthorized')
+    }
+  }
 
   // and some validation too
- 
+  if (!req.body || !req.body.result || !req.body.result.parameters) {
+    return res.status(400).send('Bad Request')
+  }
 
   // the value of Action from api.ai is stored in req.body.result.action
   console.log('* Received action -- %s', req.body.result.action)
