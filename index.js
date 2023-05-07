@@ -17,7 +17,7 @@ app.get('/webhook', function (req, res) {
 app.post('/webhook', function (req, res) {
   // we expect to receive JSON data from api.ai here.
   // the payload is stored on req.body
-  console.log(req.body)
+  console.log(req.body.key)
 
   // we have a simple authentication
   if (REQUIRE_AUTH) {
