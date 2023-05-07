@@ -1,6 +1,8 @@
+const db = require('./queries')
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
+
 app.use(bodyParser.json())
 app.set('port', (process.env.PORT || 5000))
 
@@ -13,6 +15,12 @@ app.get('/', function (req, res) {
 app.get('/webhook', function (req, res) {
   res.send('You must POST your request')
 })
+
+app.get('/users', db.getUsers)
+app.get('/users/:id', db.getUserById)
+app.post('/users', db.createUser)
+app.put('/users/:id', db.updateUser)
+app.delete('/users/:id', db.deleteUser)
 
 app.post('/webhook', function (req, res) {
   // we expect to receive JSON data from api.ai here.
