@@ -36,10 +36,7 @@ app.post('/webhook', function (req, res) {
   var webhookReply = 'Ok'
 
   // the most basic response
-  res.status(200).json({
-    speech: webhookReply
-    // displayText: webhookReply
-  })
+  res.status(200).send('Ok')
 })
 
 app.listen(app.get('port'), function () {

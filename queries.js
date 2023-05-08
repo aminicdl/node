@@ -1,11 +1,18 @@
 const Pool = require('pg').Pool
 const pool = new Pool({
-    user: 'amin',
+    user: 'postgres',
     host: 'dpg-ch74bmbhp8u9bo5253h0-a.oregon-postgres.render.com',
-    database: 'webhook_1qtv ',
-    password: 'tizfPXhsbgmwDW8ySfUYWjThhTbKnQFX ',
+    database: 'webhook_1qtv',
+    password: 'tizfPXhsbgmwDW8ySfUYWjThhTbKnQFX',
     port: 5432,
 })
+// const pool = new Pool({
+//   user: 'postgres',
+//   host: 'localhost',
+//   database: 'ali',
+//   password: 'amin666',
+//   port: 5432,
+// })
 const getUsers = (request, response) => {
   pool.query('SELECT * FROM users ORDER BY id ASC', (error, results) => {
     if (error) {
@@ -29,11 +36,11 @@ const getUserById = (request, response) => {
 const createUser = (request, response) => {
   const { name, email } = request.body
 
-  pool.query('INSERT INTO users (name, email) VALUES ($1, $2)', [name, email], (error, results) => {
+  pool.query('INSERT INTO users (name, email) VALUES ($1, $2) ', [name, email], (error, results) => {
     if (error) {
       throw error
     }
-    response.status(201).send(`User added with ID: ${results.insertId}`)
+    response.status(201).send(`User added with ID: ${id}`)
   })
 }
 
