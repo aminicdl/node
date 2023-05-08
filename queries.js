@@ -1,6 +1,6 @@
 const Pool = require('pg').Pool
 const pool = new Pool({
-    user: 'postgres',
+    user: 'amin',
     host: 'dpg-ch74bmbhp8u9bo5253h0-a.oregon-postgres.render.com',
     database: 'webhook_1qtv',
     password: 'tizfPXhsbgmwDW8ySfUYWjThhTbKnQFX',
