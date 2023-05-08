@@ -1,10 +1,11 @@
 const Pool = require('pg').Pool
 const pool = new Pool({
     user: 'amin',
-    host: 'dpg-ch74bmbhp8u9bo5253h0-a.oregon-postgres.render.com',
+    host: 'dpg-ch74bmbhp8u9bo5253h0-a',
     database: 'webhook_1qtv',
     password: 'tizfPXhsbgmwDW8ySfUYWjThhTbKnQFX',
     port: 5432,
+    ssl: true,
 })
 // const pool = new Pool({
 //   user: 'postgres',
