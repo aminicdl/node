@@ -5,7 +5,7 @@ const pool = new Pool({
     database: 'webhook_1qtv',
     password: 'tizfPXhsbgmwDW8ySfUYWjThhTbKnQFX',
     port: 5432,
-    ssl: true,
+    // ssl: true,
 })
 // const pool = new Pool({
 //   user: 'postgres',
