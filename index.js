@@ -40,7 +40,7 @@ app.post('/webhook',db.createUser, function (req, res) {
 
   // the most basic response
 
-  // res.status(200).send('Ok')
+  res.status(200).send('Ok')
 })
 
 
