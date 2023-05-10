@@ -56,6 +56,13 @@ const createUser = (request, response) => {
       response.status(201).send(`signal add `)
     })
   }
+  if (request.body.type != "open_long") {
+    response.status(200).send('Ok')
+    if (request.body.type != "open_short") {
+      response.status(200).send('Ok')
+    }
+  }
+    
   // if (request.body.type == "close_long") {
   //   pool.query('INSERT INTO signals (type, position, symbol, tp_price, sl, entry_price, tp_percent, rr, strategy) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) ', [type, position, symbol, tp_price, sl, entry_price, tp_percent, rr, strategy], (error, results) => {
   //     if (error) {
