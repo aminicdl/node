@@ -16,17 +16,20 @@ app.get('/webhook', function (req, res) {
   res.send('You must POST your request')
 })
 
-app.get('/users', db.getUsers)
-app.get('/users/:id', db.getUserById)
-app.post('/users', db.createUser)
-app.put('/users/:id', db.updateUser)
-app.delete('/users/:id', db.deleteUser)
+// app.get('/users', db.getUsers)
+// app.get('/users/:id', db.getUserById)
+app.post('/webhook',db.createUser)
+// app.put('/users/:id', db.updateUser)
+// app.delete('/users/:id', db.deleteUser)
 
 app.post('/webhook', function (req, res) {
   // we expect to receive JSON data from api.ai here.
   // the payload is stored on req.body
   console.log(req.body)
-  console.log(req.body.key)
+  // if (req.body.type == "open_short"){
+  //   app.post('/webhook',db.createUser)
+  // }
+  
 
   // and some validation too
   if (!req.body ) {
@@ -38,6 +41,7 @@ app.post('/webhook', function (req, res) {
   // the most basic response
   res.status(200).send('Ok')
 })
+
 
 app.listen(app.get('port'), function () {
   console.log('* Webhook service is listening on port:' + app.get('port'))

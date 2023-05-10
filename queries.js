@@ -1,4 +1,6 @@
 const Pool = require('pg').Pool
+const crypto = require('crypto').randomBytes(256).toString('hex');
+
 const pool = new Pool({
     user: 'amin',
     host: 'dpg-ch74bmbhp8u9bo5253h0-a',
@@ -35,13 +37,14 @@ const getUserById = (request, response) => {
 }
 
 const createUser = (request, response) => {
-  const { name, email } = request.body
+  const { type, position, symbol, tp_price, sl, entry_price, tp_percent, rr, strategy } = request.body
 
-  pool.query('INSERT INTO users (name, email) VALUES ($1, $2) ', [name, email], (error, results) => {
+  pool.query('INSERT INTO signals (type, position, symbol, tp_price, sl, entry_price, tp_percent, rr, strategy) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) ', [type, position, symbol, tp_price, sl, entry_price, tp_percent, rr, strategy], (error, results) => {
     if (error) {
       throw error
     }
-    response.status(201).send(`User added with ID: ${id}`)
+    // response.status(201).send(`User added with ID: ${id}`)
+    response.status(201).send(`signal add `)
   })
 }
 
