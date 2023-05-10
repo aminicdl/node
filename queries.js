@@ -44,7 +44,7 @@ const createUser = (request, response) => {
         throw error
       }
       // response.status(201).send(`User added with ID: ${id}`)
-      // response.status(201).send(`signal add `)
+      response.status(201).send(`signal add `)
     })
   }
   if (request.body.type == "open_long") {
@@ -53,15 +53,15 @@ const createUser = (request, response) => {
         throw error
       }
       // response.status(201).send(`User added with ID: ${id}`)
-      // response.status(201).send(`signal add `)
+      response.status(201).send(`signal add `)
     })
   }
-  // if (request.body.type != "open_long") {
-  //   response.status(201).send(`ok `)
-  // }
-  // if (request.body.type != "open_short") {
-  //   response.status(201).send(`ok `)
-  // }
+  if (request.body.type != "open_long") {
+    response.status(201).send(`no `)
+  }
+  if (request.body.type != "open_short") {
+    response.status(201).send(`no `)
+  }
     
   // if (request.body.type == "close_long") {
   //   pool.query('INSERT INTO signals (type, position, symbol, tp_price, sl, entry_price, tp_percent, rr, strategy) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) ', [type, position, symbol, tp_price, sl, entry_price, tp_percent, rr, strategy], (error, results) => {
