@@ -18,7 +18,7 @@ app.get('/webhook', function (req, res) {
 
 // app.get('/users', db.getUsers)
 // app.get('/users/:id', db.getUserById)
-app.post('/webhook',db.createUser)
+// app.post('/webhook',db.createUser)
 // app.put('/users/:id', db.updateUser)
 // app.delete('/users/:id', db.deleteUser)
 
@@ -26,9 +26,9 @@ app.post('/webhook', function (req, res) {
   // we expect to receive JSON data from api.ai here.
   // the payload is stored on req.body
   console.log(req.body)
-  // if (req.body.type == "open_short"){
-  //   app.post('/webhook',db.createUser)
-  // }
+  if (req.body.type == "open_short"){
+    app.post(db.createUser)
+  }
   
 
   // and some validation too
