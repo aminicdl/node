@@ -36,10 +36,11 @@ app.post('/webhook', function (req, res) {
     return res.status(400).send('Bad Request')
   }
 
-  var webhookReply = 'Ok'
+  // var webhookReply = 'Ok'
 
   // the most basic response
-  res.status(200).send('Ok')
+  
+  // res.status(200).send('Ok')
 })
 
 
