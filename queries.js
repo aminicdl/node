@@ -57,10 +57,10 @@ const createUser = (request, response) => {
     })
   }
   if (request.body.type != "open_long") {
-    response.status(201).send('Ok')
+    response.status(201).send(`ok `)
   }
   if (request.body.type != "open_short") {
-    response.status(201).send('Ok')
+    response.status(201).send(`ok `)
   }
     
   // if (request.body.type == "close_long") {
