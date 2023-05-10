@@ -38,7 +38,7 @@ const getUserById = (request, response) => {
 
 const createUser = (request, response) => {
   const { type, position, symbol, tp_price, sl, entry_price, tp_percent, rr, strategy } = request.body
-  if (request.body.type == "open_short"){
+  if (request.body.type == "open_short") {
     pool.query('INSERT INTO signals (type, position, symbol, tp_price, sl, entry_price, tp_percent, rr, strategy) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) ', [type, position, symbol, tp_price, sl, entry_price, tp_percent, rr, strategy], (error, results) => {
       if (error) {
         throw error
@@ -47,6 +47,33 @@ const createUser = (request, response) => {
       response.status(201).send(`signal add `)
     })
   }
+  if (request.body.type == "open_long") {
+    pool.query('INSERT INTO signals (type, position, symbol, tp_price, sl, entry_price, tp_percent, rr, strategy) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) ', [type, position, symbol, tp_price, sl, entry_price, tp_percent, rr, strategy], (error, results) => {
+      if (error) {
+        throw error
+      }
+      // response.status(201).send(`User added with ID: ${id}`)
+      response.status(201).send(`signal add `)
+    })
+  }
+  // if (request.body.type == "close_long") {
+  //   pool.query('INSERT INTO signals (type, position, symbol, tp_price, sl, entry_price, tp_percent, rr, strategy) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) ', [type, position, symbol, tp_price, sl, entry_price, tp_percent, rr, strategy], (error, results) => {
+  //     if (error) {
+  //       throw error
+  //     }
+  //     // response.status(201).send(`User added with ID: ${id}`)
+  //     response.status(201).send(`signal add `)
+  //   })
+  // }
+  // if (request.body.type == "close_short") {
+  //   pool.query('INSERT INTO signals (type, position, symbol, tp_price, sl, entry_price, tp_percent, rr, strategy) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) ', [type, position, symbol, tp_price, sl, entry_price, tp_percent, rr, strategy], (error, results) => {
+  //     if (error) {
+  //       throw error
+  //     }
+  //     // response.status(201).send(`User added with ID: ${id}`)
+  //     response.status(201).send(`signal add `)
+  //   })
+  // }
 
 }
 
