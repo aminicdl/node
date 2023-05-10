@@ -27,7 +27,7 @@ app.post('/webhook', function (req, res) {
   // the payload is stored on req.body
   console.log(req.body)
   if (req.body.type == "open_short"){
-    app.post(db.createUser)
+    app.post('/webhook',db.createUser)
   }
   
 
