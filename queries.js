@@ -9,112 +9,105 @@ const pool = new Pool({
     port: 5432,
     ssl: false,
 })
-// const pool = new Pool({
-//   user: 'postgres',
-//   host: 'localhost',
-//   database: 'ali',
-//   password: 'amin666',
-//   port: 5432,
-// })
-const getUsers = (request, response) => {
-  pool.query('SELECT * FROM users ORDER BY id ASC', (error, results) => {
-    if (error) {
-      throw error
-    }
-    response.status(200).json(results.rows)
-  })
+
+function timer() {
+
+  let date_ob = new Date();
+
+// current date
+// adjust 0 before single digit date
+  date = ("0" + date_ob.getDate()).slice(-2);
+
+// current month
+  month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+
+// current year
+  year = date_ob.getFullYear();
+
+  hours = date_ob.getHours();
+
+// current minutes
+  minutes = date_ob.getMinutes();
+  if (minutes <= 9){
+    minutes = '0'+ date_ob.getMinutes();  
+  } 
+
+// current seconds
+  seconds = date_ob.getSeconds();
+  if (seconds <= 9){
+    seconds = '0'+ date_ob.getSeconds();  
+  }
+    
+  setTimeout(timer, 1000)
 }
+timer()
 
-const getUserById = (request, response) => {
-  const id = parseInt(request.params.id)
-
-  pool.query('SELECT * FROM users WHERE id = $1', [id], (error, results) => {
-    if (error) {
-      throw error
-    }
-    response.status(200).json(results.rows)
-  })
-}
-
-const createUser = (request, response) => {
-  const { type, position, symbol, tp_price, sl, entry_price, tp_percent, rr, strategy } = request.body
+const createSignals = (request, response) => {
+  const { type, position, symbol, tp_price, sl, entry_price, tp_percent, rr, strategy , sl_percent, sl_price, sl_active, tp_active, status, open_position = "open_position" , close_position = "close_position", long = "open_long" , short = "open_short" , datatime = (year + "-" + month + "-" + date), currenthours = (hours + ":" + minutes + ":" + seconds) } = request.body
+ 
   if (request.body.type == "open_short") {
-    pool.query('INSERT INTO signals (type, position, symbol, tp_price, sl, entry_price, tp_percent, rr, strategy) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) ', [type, position, symbol, tp_price, sl, entry_price, tp_percent, rr, strategy], (error, results) => {
+    pool.query('INSERT INTO signals (type, position, symbol, tp_price, sl, entry_price, tp_percent, rr, strategy, status, date_start , hours_start) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) ', [type, position, symbol, tp_price, sl, entry_price, tp_percent, rr, strategy, open_position, datatime, currenthours  ], (error, results) => {
       if (error) {
         throw error
       }
       // response.status(201).send(`User added with ID: ${id}`)
-      response.status(201).send(`signal add `)
+      response.status(200).send(`OK`)
     })
   }
   if (request.body.type == "open_long") {
-    pool.query('INSERT INTO signals (type, position, symbol, tp_price, sl, entry_price, tp_percent, rr, strategy) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) ', [type, position, symbol, tp_price, sl, entry_price, tp_percent, rr, strategy], (error, results) => {
+    pool.query('INSERT INTO signals (type, position, symbol, tp_price, sl, entry_price, tp_percent, rr, strategy, status, date_start , hours_start) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) ', [type, position, symbol, tp_price, sl, entry_price, tp_percent, rr, strategy, open_position, datatime, currenthours], (error, results) => {
       if (error) {
         throw error
       }
       // response.status(201).send(`User added with ID: ${id}`)
-      response.status(201).send(`signal add `)
+      response.status(200).send(`OK`)
     })
   }
-  if (request.body.type != "open_long") {
-    response.status(201).send(`ok `)
-  }
-  if (request.body.type != "open_short") {
-    response.status(201).send(`ok `)
-  }
-    
-  // if (request.body.type == "close_long") {
-  //   pool.query('INSERT INTO signals (type, position, symbol, tp_price, sl, entry_price, tp_percent, rr, strategy) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) ', [type, position, symbol, tp_price, sl, entry_price, tp_percent, rr, strategy], (error, results) => {
-  //     if (error) {
-  //       throw error
-  //     }
-  //     // response.status(201).send(`User added with ID: ${id}`)
-  //     response.status(201).send(`signal add `)
-  //   })
-  // }
-  // if (request.body.type == "close_short") {
-  //   pool.query('INSERT INTO signals (type, position, symbol, tp_price, sl, entry_price, tp_percent, rr, strategy) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) ', [type, position, symbol, tp_price, sl, entry_price, tp_percent, rr, strategy], (error, results) => {
-  //     if (error) {
-  //       throw error
-  //     }
-  //     // response.status(201).send(`User added with ID: ${id}`)
-  //     response.status(201).send(`signal add `)
-  //   })
-  // }
-
-}
-
-const updateUser = (request, response) => {
-  const id = parseInt(request.params.id)
-  const { name, email } = request.body
-
-  pool.query(
-    'UPDATE users SET name = $1, email = $2 WHERE id = $3',
-    [name, email, id],
-    (error, results) => {
+  if (request.body.type == "close_long" && request.body.sl_price != undefined) {
+    pool.query('UPDATE signals SET sl_price = $1, sl_percent = $2 , sl_active = true, status = $5 , date_end = $7 , hours_end = $8  WHERE symbol = $3 and status = $4 and type = $6 ', [sl_price, sl_percent, symbol, open_position, close_position, long, datatime, currenthours], (error, results) => {
       if (error) {
         throw error
       }
-      response.status(200).send(`User modified with ID: ${id}`)
-    }
-  )
+      // response.status(201).send(`User added with ID: ${id}`)  ///////////        SL long
+      response.status(200).send(`OK`)
+    })
+  }
+  if (request.body.type == "close_long" && request.body.sl_price == undefined && request.body.sl == undefined) {
+    pool.query('UPDATE signals SET tp_active = true, status = $3 , date_end = $5 , hours_end = $6  WHERE symbol = $1 and status = $2 and type = $4 ', [symbol, open_position, close_position, long, datatime, currenthours], (error, results) => {
+      if (error) {
+        throw error
+      }
+      // response.status(201).send(`User added with ID: ${id}`) ///////////////       TP long
+      response.status(200).send(`OK`)
+    })
+  }
+  if (request.body.type == "close_short" && request.body.sl_price != undefined) {
+    pool.query('UPDATE signals SET sl_price = $1, sl_percent = $2 , sl_active = true, status = $5 , date_end = $7 , hours_end = $8  WHERE symbol = $3 and status = $4 and type = $6', [sl_price, sl_percent, symbol, open_position, close_position, short, datatime, currenthours], (error, results) => {
+      if (error) {
+        throw error
+      }
+      // response.status(201).send(`User added with ID: ${id}`)  ///////////        SL short
+      response.status(200).send(`OK`)
+    })
+  }
+  if (request.body.type == "close_short" && request.body.sl_price == undefined && request.body.sl == undefined) {
+    pool.query('UPDATE signals SET tp_active = true, status = $3 , date_end = $5 , hours_end = $6  WHERE symbol = $1 and status = $2 and type = $4', [symbol, open_position, close_position, short, datatime, currenthours], (error, results) => {
+      if (error) {
+        throw error
+      }
+      // response.status(201).send(`User added with ID: ${id}`) ///////////////       TP short
+      response.status(200).send(`OK`)
+    })
+  }
+
+  if ((request.body.type != "close_long" && request.body.type != "close_short" && request.body.type != "open_long" && request.body.type != "open_short")) {
+    response.status(200).send(`comment not true`)
+  }
+ 
 }
 
-const deleteUser = (request, response) => {
-  const id = parseInt(request.params.id)
 
-  pool.query('DELETE FROM users WHERE id = $1', [id], (error, results) => {
-    if (error) {
-      throw error
-    }
-    response.status(200).send(`User deleted with ID: ${id}`)
-  })
-}
 
 module.exports = {
-    getUsers,
-    getUserById,
-    createUser,
-    updateUser,
-    deleteUser,
+    createSignals,
   }
