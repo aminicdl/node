@@ -104,6 +104,7 @@ const createSignals = (request, response) => {
     response.status(200).send(`comment not true`)
   }
  
+  console.log(request.body)
 }
 
 
