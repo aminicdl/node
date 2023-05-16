@@ -25,6 +25,9 @@ function timer() {
   year = date_ob.getFullYear();
 
   hours = date_ob.getHours();
+  if (hours <= 9){
+    hours = '0' + date_ob.getHours();
+  }
 
 // current minutes
   minutes = date_ob.getMinutes();
