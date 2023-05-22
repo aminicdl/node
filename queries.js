@@ -1,5 +1,10 @@
 const Pool = require('pg').Pool
-
+const BingX = require('./bingx');
+require("dotenv").config();
+const bingx = new BingX(
+  process.env.BINGX_API_KEY,
+  process.env.BINGX_SECRET_KEY
+);
 
 const pool = new Pool({
     user: 'amin',
@@ -67,11 +72,21 @@ const createSignals = (request, response) => {
     })
   }
   if (request.body.type == "close_long" && request.body.sl_price != undefined) {
+
     pool.query('UPDATE signals SET sl_price = $1, sl_percent = $2 , sl_active = true, status = $5 , date_end = $7 , hours_end = $8  WHERE symbol = $3 and status = $4 and type = $6 ', [sl_price, sl_percent, symbol, open_position, close_position, long, datatime, currenthours], (error, results) => {
       if (error) {
         throw error
       }
       // response.status(201).send(`User added with ID: ${id}`)  ///////////        SL long
+      const transformedResult = result.rows.map(row => {
+        const symbolParts = row.symbol.split('USDT.PS');
+        const transformedSymbol = symbolParts.join('-USDT').toUpperCase();
+        return { symbol: transformedSymbol };
+      });
+      console.log(transformedResult[0].symbol);
+      const symbolname = transformedResult[0].symbol;
+      
+      bingx.closePositionBySymbol(symbolname) .then((data) => console.log(data));
       response.status(200).send(`OK`)
     })
   }
@@ -90,6 +105,15 @@ const createSignals = (request, response) => {
         throw error
       }
       // response.status(201).send(`User added with ID: ${id}`)  ///////////        SL short
+      const transformedResult = result.rows.map(row => {
+        const symbolParts = row.symbol.split('USDT.PS');
+        const transformedSymbol = symbolParts.join('-USDT').toUpperCase();
+        return { symbol: transformedSymbol };
+      });
+      console.log(transformedResult[0].symbol);
+      const symbolname = transformedResult[0].symbol;
+      
+      bingx.closePositionBySymbol(symbolname) .then((data) => console.log(data));
       response.status(200).send(`OK`)
     })
   }
