@@ -6,13 +6,20 @@ const bingx = new BingX(
   process.env.BINGX_SECRET_KEY
 );
 
+// const pool = new Pool({
+//     user: 'amin',
+//     host: 'dpg-ch74bmbhp8u9bo5253h0-a',
+//     database: 'webhook_1qtv',
+//     password: 'tizfPXhsbgmwDW8ySfUYWjThhTbKnQFX',
+//     port: 5432,
+//     ssl: false,
+// })
 const pool = new Pool({
-    user: 'amin',
-    host: 'dpg-ch74bmbhp8u9bo5253h0-a',
-    database: 'webhook_1qtv',
-    password: 'tizfPXhsbgmwDW8ySfUYWjThhTbKnQFX',
-    port: 5432,
-    ssl: false,
+  user: 'postgres',
+  host: 'localhost',
+  database: 'ali',
+  password: 'amin666',
+  port: 5432,
 })
 
 function timer() {
@@ -78,14 +85,17 @@ const createSignals = (request, response) => {
         throw error
       }
       // response.status(201).send(`User added with ID: ${id}`)  ///////////        SL long
-      const transformedResult = result.rows.map(row => {
-        const symbolParts = row.symbol.split('USDT.PS');
-        const transformedSymbol = symbolParts.join('-USDT').toUpperCase();
-        return { symbol: transformedSymbol };
-      });
-      console.log(transformedResult[0].symbol);
-      const symbolname = transformedResult[0].symbol;
-      
+      // console.log(results.rows)
+      // const transformedResult = results.rows.map(row => {
+      // const symbolParts = request.body.symbol.split('USDT.PS');
+      // const transformedSymbol = symbolParts.join('-USDT').toUpperCase();
+      //   return { symbol: transformedSymbol };
+      // });
+      const symbolParts = request.body.symbol.split('USDT.PS');
+      const transformedSymbol = symbolParts.join('-USDT').toUpperCase();
+      // console.log(transformedSymbol);
+      const symbolname = transformedSymbol;
+      // console.log(transformedSymbol)
       bingx.closePositionBySymbol(symbolname) .then((data) => console.log(data));
       response.status(200).send(`OK`)
     })
@@ -105,14 +115,11 @@ const createSignals = (request, response) => {
         throw error
       }
       // response.status(201).send(`User added with ID: ${id}`)  ///////////        SL short
-      const transformedResult = result.rows.map(row => {
-        const symbolParts = row.symbol.split('USDT.PS');
-        const transformedSymbol = symbolParts.join('-USDT').toUpperCase();
-        return { symbol: transformedSymbol };
-      });
-      console.log(transformedResult[0].symbol);
-      const symbolname = transformedResult[0].symbol;
-      
+      const symbolParts = request.body.symbol.split('USDT.PS');
+      const transformedSymbol = symbolParts.join('-USDT').toUpperCase();
+      // console.log(transformedSymbol);
+      const symbolname = transformedSymbol;
+      console.log(symbolname)
       bingx.closePositionBySymbol(symbolname) .then((data) => console.log(data));
       response.status(200).send(`OK`)
     })
