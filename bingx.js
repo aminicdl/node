@@ -383,9 +383,24 @@ const bingx = new BingX(
 //     console.error(error);
 // });
 
+
+// bingx.pendingStopOrders({
+//     symbol: "ADA-USDT",
+//     entrustVolume: "18",
+//     stopLossPrice: "0.36950",
+//     takeProfitPrice:"0.37350",
+
+// })
+// .then((data) => {
+//     console.log(data.data.orders);
+// })
+// .catch((error) => {
+//     console.error(error);
+// });
+
 // bingx.getPositions({ symbol: "" }).then((data) => {
 //     console.log(data.data.positions);
-    // console.log(data.data.positions[0].positionId);
+//     console.log(data.data.positions[0].positionId);
 // });
 
 

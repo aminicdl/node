@@ -6,21 +6,21 @@ const bingx = new BingX(
   process.env.BINGX_SECRET_KEY
 );
 
-// const pool = new Pool({
-//     user: 'amin',
-//     host: 'dpg-ch74bmbhp8u9bo5253h0-a',
-//     database: 'webhook_1qtv',
-//     password: 'tizfPXhsbgmwDW8ySfUYWjThhTbKnQFX',
-//     port: 5432,
-//     ssl: false,
-// })
 const pool = new Pool({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'ali',
-  password: 'amin666',
-  port: 5432,
+    user: 'amin',
+    host: 'dpg-ch74bmbhp8u9bo5253h0-a',
+    database: 'webhook_1qtv',
+    password: 'tizfPXhsbgmwDW8ySfUYWjThhTbKnQFX',
+    port: 5432,
+    ssl: false,
 })
+// const pool = new Pool({
+//   user: 'postgres',
+//   host: 'localhost',
+//   database: 'postgres',
+//   password: 'amin666',
+//   port: 5432,
+// })
 
 function timer() {
 
