@@ -30,5 +30,10 @@
   "bugs": {
     "url": "https://github.com/supermamon/apiai-nodejs-webhook-sample/issues"
   },
-  "homepage": "https://github.com/supermamon/apiai-nodejs-webhook-sample#readme"
+  "homepage": "https://github.com/supermamon/apiai-nodejs-webhook-sample#readme",
+  "devDependencies": {
+    "@babel/core": "^7.22.1",
+    "@babel/preset-env": "^7.22.2",
+    "@babel/register": "^7.21.0"
+  }
 }
