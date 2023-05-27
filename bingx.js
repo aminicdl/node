@@ -398,9 +398,9 @@ const bingx = new BingX(
 //     console.error(error);
 // });
 
-// bingx.getPositions({ symbol: "" }).then((data) => {
+// bingx.getPositions({ symbol: "ETH-USDT" }).then((data) => {
 //     console.log(data.data.positions);
-//     console.log(data.data.positions[0].positionId);
+    // console.log(data.data.positions[0].positionId);
 // });
 
 
