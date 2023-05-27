@@ -1,4 +1,4 @@
-const axios = require("axios");
+import axios from 'axios';
 const Pool = require('pg').Pool;
 const BingX = require('./bingx');
 require("dotenv").config();

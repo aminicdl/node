@@ -1,4 +1,4 @@
-const axios = require("axios");
+import axios from 'axios';
 const db = require('./queries')
 const express = require('express')
 const bodyParser = require('body-parser')
